@@ -1,0 +1,31 @@
+
+body {
+    background-color: #0b0c10;
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.card {
+    background-color: #1f2833;
+    color: white;
+    border: 1px solid #45a29e;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.03);
+}
+
+.card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.navbar {
+    background-color: #1f2833 !important;
+}
+
+input.form-control {
+    background-color: #c5c6c7;
+}
+    
