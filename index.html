@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,16 +10,37 @@
 <body>
     <nav class="navbar navbar-dark bg-dark p-3">
         <div class="container-fluid">
-            <span class="navbar-brand">🚀 Space News Aggregator</span>
-            <input type="text" id="searchInput" class="form-control w-25" placeholder="Search news...">
+            <span class="navbar-brand mb-0 mb-md-0">🚀 Space News Aggregator</span>
+            <div class="d-flex gap-2 flex-wrap justify-content-end">
+                <input type="text" id="searchInput" class="form-control" placeholder="Search news..." style="max-width: 200px;">
+                <select id="sortDropdown" class="form-select" style="max-width: 150px;">
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                </select>
+            </div>
         </div>
     </nav>
+
     <main class="container my-4">
         <h2 class="text-center text-light mb-4">Latest Space News</h2>
+
+        <!-- Loading spinner -->
+        <div id="loadingSpinner" class="text-center mb-4">
+            <div class="spinner-border text-info" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="text-light mt-2">Fetching latest news...</p>
+        </div>
+
+        <!-- News grid -->
         <div class="row" id="newsContainer"></div>
+
+        <!-- Empty state message -->
+        <div id="emptyState" class="text-center text-light" style="display: none;">
+            <p class="fs-5">No articles found. Try a different search!</p>
+        </div>
     </main>
+
     <script src="script.js"></script>
 </body>
-</html> 
-
-
+</html>
