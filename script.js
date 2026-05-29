@@ -1,5 +1,5 @@
 
-const API_URL = 'https://api.spaceflightnewsapi.net/v4/articles/?limit=50';
+const API_URL = 'https://api.spaceflightnewsapi.net/v4/articles/?limit=75';
 const container = document.getElementById("newsContainer");
 const searchInput = document.getElementById("searchInput");
 let articles = [];
