@@ -216,3 +216,30 @@ body {
     font-size: 0.78rem;
     color: #6b7785;
 }
+
+/* ---------- Mobile navbar fix ---------- */
+@media (max-width: 768px) {
+    .navbar .container-fluid {
+        flex-wrap: wrap !important;
+        justify-content: center;
+    }
+    .navbar .navbar-brand {
+        flex: 1 0 100% !important;
+        text-align: center !important;
+        font-size: 1.5rem !important;
+        margin-bottom: 12px !important;
+    }
+    .navbar .d-flex.gap-2 {
+        width: 100%;
+        flex-wrap: nowrap !important;
+        justify-content: center;
+    }
+    .navbar #searchInput {
+        flex: 1;
+        max-width: none !important;
+    }
+    .navbar #sortDropdown {
+        flex: 0 0 auto;
+        max-width: 140px !important;
+    }
+}
