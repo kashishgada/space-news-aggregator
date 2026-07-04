@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space News Aggregator</title>
+    <!-- Bootstrap first, our stylesheet second: styles.css is loaded after so its rules override Bootstrap's defaults where they overlap. -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <nav class="navbar navbar-dark bg-dark p-3">
-        <div class="container-fluid">
-            <span class="navbar-brand mb-0 mb-md-0">🚀 Space News Aggregator</span>
-            <div class="d-flex gap-2 flex-wrap justify-content-end">
+    <nav class="navbar navbar-dark bg-dark p-4">
+        <div class="container-fluid d-flex align-items-center flex-nowrap">
+            <span class="navbar-brand mb-0" style="flex: 1; text-align: center; font-size: 1.8rem; font-weight: 700;">🚀 Space News Aggregator</span>
+            <div class="d-flex gap-2 flex-nowrap">
+                <!-- id hooks below (searchInput, sortDropdown) are wired up by script.js -->
                 <input type="text" id="searchInput" class="form-control" placeholder="Search news..." style="max-width: 200px;">
                 <select id="sortDropdown" class="form-select" style="max-width: 150px;">
                     <option value="newest">Newest First</option>
@@ -21,8 +23,17 @@
         </div>
     </nav>
 
-    <main class="container my-4">
-        <h2 class="text-center text-light mb-4">Latest Space News</h2>
+    <section class="hero">
+        <p class="eyebrow">● Live from orbit</p>
+        <h1>Space News, as it happens</h1>
+        <p class="subtitle">The latest launches, missions and discoveries from across the cosmos, gathered in one place.</p>
+    </section>
+
+        <main class="container my-4">
+        <div class="section-head">
+            <!-- Empty on load; script.js fills in the live "Showing N articles" text. -->
+            <span id="resultCount" class="result-count"></span>
+        </div>
 
         <!-- Loading spinner -->
         <div id="loadingSpinner" class="text-center mb-4">
@@ -40,6 +51,14 @@
             <p class="fs-5">No articles found. Try a different search!</p>
         </div>
     </main>
+
+    <footer class="site-footer">
+    <p class="footer-title">🚀 Space News Aggregator</p>
+    <p>Powered by the Spaceflight News API</p>
+    <p class="footer-name"> Kashish Paresh Gada &middot; Student ID - 102202657 &middot; DLBCSPJWD01 - Project : Java and Web Development</p>
+    <p class="footer-note">Created for educational purposes as part of university project work.</p> 
+    <p class="footer-note"> Not affiliated with any space agency or news provider.</p>
+</footer>
 
     <script src="script.js"></script>
 </body>
