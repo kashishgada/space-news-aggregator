@@ -13,13 +13,33 @@ Development**.
 ## Features
 
 - **Real-time news feed** — fetches the latest articles from the Spaceflight News API
-- **Live search** — filters articles instantly as you type (no page reload)
+- **Live search** — filters articles as you type (no page reload)
 - **Sort by date** — order the feed newest-first or oldest-first
 - **Responsive layout** — adapts from four cards down to one across desktop, tablet and mobile
 - **Source badges** and **relative timestamps** (e.g. "3 hr ago") on each card
 - **Live result count** showing how many articles match
 - **Graceful states** — loading spinner, empty-search message, and an error message if the API is unavailable
 - **Safe rendering** — article text is escaped to prevent HTML injection; a built-in placeholder is shown when an article has no image
+- **Backend caching** — the server caches results for 5 minutes so the external API isn't hit on every request
+
+---
+
+## Architecture
+
+This app has a small **Node/Express backend** and a **static frontend**, with one
+important rule: the browser only ever talks to my own backend, never directly to
+the external news API.
+
+```
+Browser (public/)  ──>  Express backend (server.js)  ──>  Spaceflight News API
+    script.js                 /api/articles                api.spaceflightnewsapi.net
+```
+
+- The **backend** ([server.js](server.js)) serves the frontend, fetches news from the
+  Spaceflight News API, applies the search and sort, caches the result for 5
+  minutes, and exposes a single endpoint: `GET /api/articles?search=&sort=`.
+- The **frontend** ([public/](public/)) sends the current search term and sort order to
+  that endpoint and renders the returned articles as cards.
 
 ---
 
@@ -27,21 +47,23 @@ Development**.
 
 | Layer | Technology |
 |-------|-----------|
+| Backend / server | Node.js + [Express 4](https://expressjs.com/) |
 | Structure | HTML5 |
 | Styling / responsive layout | CSS3 + Bootstrap 5 |
-| Dynamic behaviour | Vanilla JavaScript (ES6) — no framework |
+| Dynamic behaviour | Vanilla JavaScript (ES6) — no frontend framework |
 | Data source | [Spaceflight News API v4](https://www.spaceflightnewsapi.net/) (REST, JSON, no API key required) |
 
-The app is entirely client-side. The browser fetches directly from the public
-Spaceflight News API, which acts as the backend, so there is no server to install
-or run.
+The frontend makes no direct calls to the Spaceflight News API — all requests go
+through the Express backend.
 
 ---
 
 ## Getting Started
 
-There is **no build step and nothing to install** — the project is plain HTML,
-CSS and JavaScript.
+### Prerequisites
+
+- **Node.js 18 or newer** (the backend uses the built-in `fetch`)
+- An **internet connection** (the app fetches live data from the Spaceflight News API)
 
 ### 1. Get the code
 
@@ -50,33 +72,22 @@ git clone https://github.com/kashishgada/space-news-aggregator.git
 cd space-news-aggregator
 ```
 
-(Or download the repository as a ZIP and extract it.)
-
-### 2. Run it
-
-**Option A — open directly**
-
-Double-click `index.html`, or open it in your browser. This works in most modern
-browsers because the API sends the required CORS headers.
-
-**Option B — local server (recommended)**
-
-If your browser blocks the request when opening the file directly, serve the
-folder over a local web server:
-
-Using the VS Code **Live Server** extension: right-click `index.html` →
-*Open with Live Server*.
-
-Or using Python (already installed on most systems):
+### 2. Install dependencies
 
 ```bash
-python -m http.server 8000
+npm install
 ```
 
-Then open <http://localhost:8000> in your browser.
+### 3. Run it
 
-An internet connection is required, since the app fetches live data from the
-Spaceflight News API.
+```bash
+npm start
+```
+
+Then open <http://localhost:3000> in your browser.
+
+> The port can be changed by setting the `PORT` environment variable, e.g.
+> `PORT=8080 npm start`.
 
 ---
 
@@ -84,9 +95,43 @@ Spaceflight News API.
 
 ```
 space-news-aggregator/
-├── index.html    # Page markup: top bar, hero, news grid, footer
-├── styles.css    # Dark theme, card styling, responsive rules
-└── script.js     # Fetches the API, renders cards, handles search & sort
+├── server.js         # Express backend: serves the frontend, fetches + caches news, exposes /api/articles
+├── package.json      # Project metadata, dependencies (express) and the "start" script
+└── public/           # Static frontend served by the backend
+    ├── index.html    # Page markup: top bar, hero, news grid, footer
+    ├── styles.css    # Dark theme, card styling, responsive rules
+    └── script.js     # Calls /api/articles, renders cards, handles search & sort
+```
+
+---
+
+## API
+
+The backend exposes a single endpoint that the frontend consumes.
+
+`GET /api/articles`
+
+| Query param | Values | Description |
+|-------------|--------|-------------|
+| `search` | any text | Keeps only articles whose title or summary contains the term (case-insensitive) |
+| `sort` | `newest` (default) / `oldest` | Orders the articles by publication date |
+
+**Example response**
+
+```json
+{
+  "count": 75,
+  "articles": [
+    {
+      "title": "…",
+      "summary": "…",
+      "imageUrl": "…",
+      "url": "…",
+      "source": "…",
+      "publishedAt": "…"
+    }
+  ]
+}
 ```
 
 ---
