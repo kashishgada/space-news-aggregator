@@ -1,0 +1,12 @@
+{
+  "name": "space-news-aggregator",
+  "version": "1.0.0",
+  "description": "A web app that aggregates space news. A Node/Express backend consumes the Spaceflight News API and the frontend talks only to that backend.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
