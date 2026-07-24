@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Space News Aggregator: the latest space launches, missions and discoveries from across the cosmos, gathered in one place with search, sorting and favourites.">
     <title>Space News Aggregator</title>
     <!-- Bootstrap first, our stylesheet second: styles.css is loaded after so its rules override Bootstrap's defaults where they overlap. -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -13,12 +14,16 @@
         <div class="container-fluid d-flex align-items-center flex-nowrap">
             <span class="navbar-brand mb-0" style="flex: 1; text-align: center; font-size: 1.8rem; font-weight: 700;">🚀 Space News Aggregator</span>
             <div class="d-flex gap-2 flex-nowrap">
+                <select id="sourceDropdown" class="form-select" style="max-width: 160px;">
+                    <option value="">All sources</option>
+                </select>
                 <!-- id hooks below (searchInput, sortDropdown) are wired up by script.js -->
                 <input type="text" id="searchInput" class="form-control" placeholder="Search news..." style="max-width: 200px;">
                 <select id="sortDropdown" class="form-select" style="max-width: 150px;">
                     <option value="newest">Newest First</option>
                     <option value="oldest">Oldest First</option>
                 </select>
+                <button id="favBtn" class="btn btn-outline-info">★ Favourites</button>
             </div>
         </div>
     </nav>
@@ -29,7 +34,7 @@
         <p class="subtitle">The latest launches, missions and discoveries from across the cosmos, gathered in one place.</p>
     </section>
 
-        <main class="container my-4">
+    <main class="container my-4">
         <div class="section-head">
             <!-- Empty on load; script.js fills in the live "Showing N articles" text. -->
             <span id="resultCount" class="result-count"></span>

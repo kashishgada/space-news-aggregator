@@ -4,17 +4,6 @@ body {
     font-family: 'Segoe UI', sans-serif;
 }
 
-.card {
-    background-color: #1f2833;
-    color: white;
-    border: 1px solid #45a29e;
-    transition: transform 0.3s ease;
-}
-
-.card:hover {
-    transform: scale(1.03);
-}
-
 .card img {
     height: 200px;
     /* cover crops each image to fill the fixed 200px box, so source images of varying aspect ratios stay uniform instead of stretching or letterboxing. */
@@ -23,25 +12,6 @@ body {
 
 .navbar {
     background-color: #1f2833 !important;
-}
-
-.form-control,
-.form-select {
-    background-color: #c5c6c7;
-    color: #000;
-    border: none;
-}
-
-.form-control::placeholder {
-    color: #666;
-}
-
-.form-control:focus,
-.form-select:focus {
-    background-color: #c5c6c7;
-    color: #000;
-    border: none;
-    box-shadow: 0 0 0 0.2rem rgba(69, 162, 158, 0.25);
 }
 
 .spinner-border {
@@ -151,9 +121,12 @@ body {
 
 /* Card refinements: subtle border, rounded, teal lift on hover */
 .card {
+    background-color: #1f2833;
+    color: white;
     border: 1px solid #2c3a48;
     border-radius: 10px;
     overflow: hidden;
+    transition: transform 0.3s ease;
 }
 .card:hover {
     /* lift the card slightly on hover as a subtle interactive cue */
@@ -243,3 +216,23 @@ body {
         max-width: 140px !important;
     }
 }
+
+/* ---------- Favourite (star) button on cards ---------- */
+.fav-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(11, 12, 16, 0.8);
+    color: #eef1f4;
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+}
+.fav-btn:hover { background-color: rgba(69, 162, 158, 0.9); }
+.fav-btn.is-fav { color: #ffd43b; }  /* gold when saved */
+
+#favBtn.active { background-color: #45a29e; color: #0b0c10; }
